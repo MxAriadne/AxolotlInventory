@@ -1,0 +1,75 @@
+/* Set common styles for html and body elements */
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: "RedHands";
+}
+
+/* Define the RedHands font only once */
+@font-face {
+    font-family: "RedHands";
+    src: url("KGRedHands.ttf");
+}
+
+/* Define the CourierNew font only once */
+@font-face {
+    font-family: "CourierNew";
+    src: url("cour.ttf");
+}
+
+/* Set common styles for the left data box */
+#left-data-box {
+  width: 20%;
+  height: 100vh;
+  background-color: #ffcde9;
+  border: 15px solid #ffcde9;
+  float: left;
+}
+
+/* Set styles for the Add Item button */
+.add-btn {
+  font-size: 22px;
+  font-family: CourierNew;
+  color: #CDFFE3;
+  border-bottom: none;
+  font-weight: bold;
+  display: block;
+}
+
+/* Set styles for the left data box buttons */
+#left-data-box button {
+  background-color: #ffcde9;
+  border: none;
+  border-bottom: 2px solid #FFFCCD;
+  color: #FFFCCD;
+  font-size: 30px;
+  padding-top: 20px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Set styles for the left data box images */
+#left-data-box img {
+  padding-bottom: 4px;
+  padding-right: 5px;
+  width: 10%;
+  height: 12%;
+}
+
+/* Set common styles for the right data box */
+#right-data-box {
+  width: 80%;
+  height: 100vh;
+  padding: 50px;
+  float: right;
+}
+
+/* Set styles for the tab paragraphs */
+p.tab {
+  font-size: 22px;
+  font-weight: bold;
+  font-family: CourierNew;
+  color: #CDFFE3;
+  text-align: center;
+  margin-top: 15px;
+}
