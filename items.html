@@ -1,53 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width", initial-scale=1>
+  <meta name="viewport" content="width=device-width">
   <title>Items - Axolotl Inventory</title>
+
+  <!-- Import CSS for item list. -->
+  <link href="css/list.css" rel="stylesheet" type="text/css">
+
+  <!-- Import local JS functions. -->
+  <script src="js/script.js"></script>
+  <!-- Import JS for item list handlers. -->
+  <script src="js/client.js"></script>
+  <!-- Import JS for Bootstrap. -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <!-- Import JS for jQuery. -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <link href="style/list.css" rel="stylesheet" type="text/css" />
-  <script src="script/script.js"></script>
+  <!-- Import JS for SQL.JS . -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.1/sql-wasm.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
 </head>
 <body>
-
-<script>
-</script>
-
 <!-- Nav bar -->
 <div id="left-data-box">
 
-  <button disabled><a href="index.html"><img src="images/home.png" alt="Home"></a>  Items stored</button>
+  <button disabled=""><a href="index.html"><img src="public/images/home.png" alt="Home"></a>  Items stored</button>
   <br>
 
-  <p class="tab">> Add item to inventory?</p>
+  <p class="tab">&gt; Add item to inventory?</p>
   <div id="add-tab">
+    <form id="add-form">
 
-    <input type="text" id="name" placeholder="Item name...">
-    <input type="text" id="desc" placeholder="Item description...">
-    <input type="file" accept="image/jpeg, image/png, image/jpg">
+      <input type="text" name="name" id="name" placeholder="Item name...">
+      <br>
+      <input type="text" style="height: 150px;" name="desc" id="desc" placeholder="Item description...">
 
-    <button onClick="addElement()"><p class="add-btn" >Submit</p></button>
+      <button type="submit"><p class="add-btn">Submit</p></button>
+
+    </form>
   </div>
-
 </div>
 
-
 <div id="right-data-box">
-
-  <table align="center" width="20%">
-    <tr>
+  <table>
+    <tbody><tr>
       <td style="padding-right: 10px">
         <input type="text" id="Search" onkeyup="searchItems()" placeholder="Search...">
       </td>
+      <td>
+        <button id="show" onclick="window.location.reload()">List Items</button>
+      </td>
     </tr>
-  </table>
+  </tbody></table>
   <br>
 
-  <button id="show" onClick="showItems()">List Items</button>
+  <table id="items">
+    <tbody id="item-grid">
+      <tr>
+        <th id="col-remove">x</th>
+        <th id="col-id">ID</th>
+        <th id="col-name">Name</th>
+        <th id="col-desc">Description</th>
+        <th id="col-date">Date</th>
+      </tr>
+    </tbody>
+  </table>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-</body>
-</html>
+</body></html>

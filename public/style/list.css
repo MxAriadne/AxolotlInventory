@@ -56,12 +56,30 @@ html, body {
   height: 12%;
 }
 
+/* Set styles for the left data box input boxes */
+#left-data-box #add-tab input {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
 /* Set common styles for the right data box */
 #right-data-box {
   width: 80%;
   height: 100vh;
   padding: 50px;
   float: right;
+}
+
+#right-data-box #item-grid td, #items {
+    border: 2px solid purple;
+    padding: 20px;
+}
+
+#right-data-box #item-grid, #items {
+    float: center;
+    text-align: center;
+    width: 100%;
 }
 
 /* Set styles for the tab paragraphs */
