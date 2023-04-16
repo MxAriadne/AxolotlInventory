@@ -6,8 +6,6 @@
   <!-- Import CSS for item list. -->
   <link href="css/list.css" rel="stylesheet" type="text/css">
 
-  <!-- Import local JS functions. -->
-  <script src="js/script.js"></script>
   <!-- Import JS for item list handlers. -->
   <script src="js/client.js"></script>
   <!-- Import JS for Bootstrap. -->
@@ -35,7 +33,7 @@
       <br>
       <input type="text" style="height: 150px;" name="desc" id="desc" placeholder="Item description...">
 
-      <button type="submit"><p class="add-btn">Submit</p></button>
+      <button type="submit" onclick="window.location.reload()"><p class="add-btn">Submit</p></button>
 
     </form>
   </div>
@@ -46,9 +44,6 @@
     <tbody><tr>
       <td style="padding-right: 10px">
         <input type="text" id="Search" onkeyup="searchItems()" placeholder="Search...">
-      </td>
-      <td>
-        <button id="show" onclick="window.location.reload()">List Items</button>
       </td>
     </tr>
   </tbody></table>
@@ -63,8 +58,43 @@
         <th id="col-desc">Description</th>
         <th id="col-date">Date</th>
       </tr>
-    </tbody>
+    <tr class="target" id="5"><td><button class="view">🔎</button><button class="remove-item" name="5" onclick="window.location.reload()">🗑️</button></td><td>5</td><td>jgvcgjh</td><td>iubgikuhj</td><td>3/16/2023</td></tr></tbody>
   </table>
+
+</div>
+
+<!-- The Modal -->
+<div id="item-modal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close" onclick="$(&quot;#item-modal&quot;).css(&quot;display&quot;, &quot;none&quot;)">×</span>
+    <br>
+    <p id="item-id" style="display: none;"></p>
+    <h1 id="modal-title">Item name.</h1>
+    <p id="modal-desc">Item desc.</p>
+  </div>
+  <div id="note-list" class="modal-content">
+    <h1>Notes</h1>
+    <br>
+    <form id="add-note-form">
+      <table id="notes">
+        <tbody id="note-grid">
+          <tr>
+            <th id="modal-remove">x</th>
+            <th id="modal-note">Note</th>
+            <th id="modal-date">Date</th>
+          </tr>
+          <tr>
+              <td><input type="text" name="user" id="user" placeholder="User name..."></td>
+              <td><input type="text" name="note" id="note" placeholder="Note...">
+                  <button id="note-button" type="submit" onclick="window.location.reload()"><p>Add</p></button></td>
+              <td><p style="text-align: center;" id="note-date"><script>document.getElementById("note-date").innerHTML = new Date().toLocaleDateString('en-US');</script></p></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
 
 </div>
 

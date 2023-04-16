@@ -17,6 +17,45 @@ html, body {
     src: url("cour.ttf");
 }
 
+/* The Modal (background) */
+#item-modal {
+  display: none; /* Hidden by default */
+  background-color: #CDFFE3;
+}
+
+/* Modal Content/Box */
+div .modal-content {
+  background-color: #CDFFE3;
+  border: 5px solid #888;
+  float: center;
+  padding: 40px;
+  width: 100%; /* Could be more or less, depending on screen size */
+  height: 100%; /* Could be more or less, depending on screen size */
+}
+
+/* Modal Content/Box */
+div #note-list {
+  background-color: #FFFCCD;
+  border: 5px solid #888;
+  float: left;
+  padding: 40px;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 /* Set common styles for the left data box */
 #left-data-box {
   width: 20%;
@@ -80,6 +119,35 @@ html, body {
     float: center;
     text-align: center;
     width: 100%;
+}
+
+#note-grid td, #notes {
+    border: 2px solid purple;
+}
+
+#note, #user {
+    display: block;
+    text-align: center;
+    background-color: #FFFCCD;
+    border: none;
+    margin: 0 auto;
+    height: auto;
+    width: auto;
+}
+
+/* Set styles for the Add Item button */
+#note-button p {
+  font-size: 12px;
+  font-family: CourierNew;
+  text-align: center;
+  display: block;
+}
+
+#note-button {
+    margin: 0 auto;
+    z-index: 0;
+    background: none;
+    border: 1px solid black;
 }
 
 /* Set styles for the tab paragraphs */
