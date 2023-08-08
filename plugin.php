@@ -67,8 +67,8 @@ function sqlConnect(): bool|mysqli
  function updateEntry($type, $var, $val, $id) {
     $mysqli = sqlConnect();
     if ($mysqli) {
-        $stmt = $mysqli->prepare("UPDATE $type SET ? = ? WHERE id=?");
-        $stmt->bind_param('ssi', $var, $val, $id);
+        $stmt = $mysqli->prepare("UPDATE $type SET $var = ? WHERE id=?");
+        $stmt->bind_param('si',  $val, $id);
         $stmt->execute();
     } else {
         return null;
@@ -78,16 +78,25 @@ function sqlConnect(): bool|mysqli
 # Type is either items or notes (represents the DB table)
 # Var is the variable name, ie: id, timestamp, etc.
 # Val is the new value for the section.
-function saveEntry($type, $name, $info, $status) {
-    $date = date("m/d/Y");
+function saveEntry($type, $name, $info, $status, $serial, $imei, $quantity) {
+    date_default_timezone_set('America/Chicago');
+    $date = date("m/d/Y\ng:i a");
     $mysqli = sqlConnect();
     if ($mysqli) {
         if ($type == "items") {
-            $stmt = $mysqli->prepare("INSERT INTO $type(name, info, timestamp, status) VALUES (?, ?, ?, ?)");
-        } else {
+            $stmt = $mysqli->prepare("INSERT INTO $type(name, info, timestamp, status, serial, imei) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param('ssssss', $name, $info, $date, $status, $serial, $imei);
+        } elseif ($type == "notes") {
             $stmt = $mysqli->prepare("INSERT INTO $type(item_id, note, timestamp, status) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param('ssss', $name, $info, $date, $status);
+            updateEntry("items", "status", $status, $name);
+        } elseif ($type == "sku") {
+            $stmt = $mysqli->prepare("INSERT INTO $type(name, quantity) VALUES (?, ?)");
+            $stmt->bind_param('ss', $name, $status);
+        } elseif ($type == "sku_item") {
+            $stmt = $mysqli->prepare("INSERT INTO $type(item_id, price, status, timestamp, retailer, order_no) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param('idssss', $name, $info, $status, $date, $serial, $imei);
         }
-        $stmt->bind_param('ssss', $name, $info, $date, $status);
         $stmt->execute();
     } else {
         return null;
@@ -100,9 +109,19 @@ function saveEntry($type, $name, $info, $status) {
 function deleteEntry($type, $id) {
     $mysqli = sqlConnect();
     if ($mysqli) {
-        $stmt = $mysqli->prepare("DELETE FROM $type WHERE id=?");
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
+        if ($type == "items") {
+            $stmt = $mysqli->prepare("DELETE FROM notes WHERE item_id=?");
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $stmt = $mysqli->prepare("DELETE FROM $type WHERE id=?");
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+        } else {
+            $stmt = $mysqli->prepare("DELETE FROM $type WHERE id=?");
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+        }
+
     } else {
         return null;
     }
@@ -112,7 +131,11 @@ function deleteEntry($type, $id) {
 # $type refers to the table name, ie: items or notes
 # id refers to the primary key of the item in the table
 function viewEntry($type, $id) {
-    header("Location: workorder.php?id=$id");
+    if ($type == "items") {
+        header("Location: workorder.php?id=$id");
+    } else if ($type == "sku") {
+        header("Location: items-skus.php?id=$id");
+    }
 }
 
 # Holds info of the selected workorder for the notes page
@@ -125,13 +148,13 @@ function workorderHold($type, $id) {
         $stmt->bind_param('i', $id);
         $stmt->execute();
         $result = $stmt->get_result();
-        //$result = mysqli_fetch_array($stmt, MYSQLI_ASSOC);
+        $output = $result->fetch_assoc();
 
-        if ($result == null) {
+        if ($output == null) {
             consoleLog("Something is very wrong, this item does not exist.");
             return null;
         } else {
-            return $result;
+            return $output;
         }
     } else {
         return null;
@@ -147,9 +170,13 @@ function listDataset($type, $optional) {
         if (!isset($optional["id"])) {
             $stmt = $mysqli->prepare("SELECT * FROM $type");
         } else {
-            consoleLog("Fuck");
             $stmt = $mysqli->prepare("SELECT * FROM $type WHERE item_id=?");
             $stmt->bind_param('i', $optional["id"]);
+            if ($type == "sku_item") {
+                $result = $mysqli->query("SELECT * FROM sku_item WHERE item_id=" . $optional["id"] . "");
+                $row_cnt = $result->num_rows;
+                updateEntry("sku", "quantity", $row_cnt, $optional["id"]);
+            }
         }
         $stmt->execute();
         $result = $stmt->get_result();

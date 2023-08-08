@@ -1,25 +1,27 @@
 <?php
+//THIS IS FOR DISPLAYING THE PARTS AND THEIR COSTS ETC NOT FOR WORKORDERS
+
     require_once "plugin.php";
 
-    $wordorder = listDataset("items", null);
+    $inventory = listDataset("sku", null);
 
     // Check if the request method is POST
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (isset($_POST['delete'])) {
-            deleteEntry("items", $_POST['delete']);
+            deleteEntry("sku", $_POST['delete']);
             unset($_POST["delete"]);
             header("refresh: 0");
         }
 
         if (isset($_POST['view'])) {
-            viewEntry("items", $_POST['view']);
+            viewEntry("sku", $_POST['view']);
             unset($_POST["view"]);
             header("refresh: 0");
         }
 
         if (isset($_POST['add-item'])) {
-            saveEntry("items", $_POST['name'], $_POST['info'], "Awaiting Diagnostics", $_POST['serial'], $_POST['imei']);
+            saveEntry("sku", $_POST['name'], null, 0, null, null, null);
             unset($_POST["add-item"]);
             header("refresh: 0");
         }
@@ -31,10 +33,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Devices - Axolotl Inventory</title>
+    <title>Items - Axolotl Inventory</title>
 
     <!-- Import CSS for item list. -->
-    <link href="style/list.css" rel="stylesheet" type="text/css">
+    <link href="style/inventory-list.css" rel="stylesheet" type="text/css">
     <!-- Import JS for Bootstrap. -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <!-- Import JS for jQuery. -->
@@ -70,25 +72,19 @@
 <!-- Nav bar -->
 <div id="left-data-box">
 
-    <button disabled="">Devices stored</button>
+    <button disabled="">Items stored</button>
     <table>
-        <th><button class="nav-btn"><a href="items.php">Items</a></button></th>
+        <th><button class="nav-btn"><a href="index.php">Devices</a></button></th>
         <th><button class="nav-btn"><a href="financials.php">Financials</a></button></th>
     </table>
     
     <br>
 
-    <p class="tab">&gt; Add device to inventory?</p>
+    <p class="tab">&gt; Add item to inventory?</p>
     <div id="add-tab">
         <form method="post" id="add-form">
 
             <input type="text" name="name" id="name" placeholder="Item name..." required><br>
-            
-            <input type="text" name="serial" id="name" placeholder="Item serial..."><br>
-            
-            <input type="text" name="imei" id="name" placeholder="Item IMEI..."><br>
-
-            <input type="text" style="height: 150px;" name="info" id="desc" placeholder="Item description...">
 
            <button type="submit" name="add-item" onclick="window.location.reload()"><p class="add-btn">Submit</p></button>
 
@@ -112,38 +108,24 @@
         <tbody id="item-grid">
         <tr>
             <th>x</th>
-            <th>ID</th>
+            <th>SKU</th>
             <th>Name</th>
-            <th>Description</th>
-            <th>Serial/IMEI</th>
-            <th>Status</th>
-            <th>Date</th>
+            <th>Quantity</th>
         </tr>
         <?php
-            foreach ($wordorder as $wo) {
-                echo "<tr class=\"target\" name=\"" . $wo["id"] . "\">";
+            foreach ($inventory as $item) {
+                echo "<tr class=\"target\" name=\"" . $item["id"] . "\">";
                 echo "<form action=\"\" method=\"POST\"><td>
                           <button type='submit'>🔎</button>
-                          <input type=\"hidden\"  name=\"view\"  value=\"" . $wo["id"] . "\"/>
+                          <input type=\"hidden\"  name=\"view\"  value=\"" . $item["id"] . "\"/>
                       </form>
                       <form action=\"\" method=\"POST\">
                           <button type='submit'>🗑️</button>
-                          <input type=\"hidden\"  name=\"delete\"  value=\"" . $wo["id"] . "\"/>
+                          <input type=\"hidden\"  name=\"delete\"  value=\"" . $item["id"] . "\"/>
                       </td></form>";
-                echo "<td> ". $wo["id"] . "</td>";
-                echo "<td> ". $wo["name"] . " </td>";
-                echo "<td> ". $wo["info"] . " </td>";
-                if ($wo["serial"] && $wo["imei"]) {
-                    echo "<td>Serial: ". $wo["serial"] . "<br>IMEI: " . $wo["imei"] . " </td>";
-                } elseif ($wo["serial"]) {
-                    echo "<td>Serial: ". $wo["serial"] . "</td>";
-                } elseif ($wo["imei"]) {
-                    echo "<td>IMEI: ". $wo["imei"] . "</td>";
-                } else {
-                    echo "<td>N/A</td>";
-                }
-                echo "<td> ". $wo["status"] . " </td>";
-                echo "<td> ". $wo["timestamp"] . " </td>";
+                echo "<td> ". $item["id"] . "</td>";
+                echo "<td> ". $item["name"] . " </td>";
+                echo "<td> ". $item["quantity"] . " </td>";
                 echo "</tr>";
             }
         ?>
