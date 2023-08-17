@@ -1,0 +1,19 @@
+{
+    "name": "axolotl/ivyhjnm",
+    "description": "Inventory Management system. Can store workorders, item inventory, and purchase orders.",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Freyja Ariadne",
+            "email": "spellbreaker.tech@gmail.com"
+        }
+    ],
+    "require": {
+        "laminas/laminas-barcode": "2.12.0",
+        "ext-mysqli": "*"
+    },
+    "autoload": {
+        "classmap": ["src"]
+    }
+}
