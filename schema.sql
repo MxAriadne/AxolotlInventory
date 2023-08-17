@@ -35,7 +35,7 @@ CREATE TABLE notes
     id        INT AUTO_INCREMENT PRIMARY KEY,
 
     # This is the WO number for the item.
-    item_id   INTEGER,
+    parent_id   INTEGER,
 
     # This is literally just the date.
     timestamp TEXT,
@@ -47,7 +47,7 @@ CREATE TABLE notes
     note      TEXT,
 
     # This is grabbing the WO number from the item table.
-    FOREIGN KEY (item_id) REFERENCES items (id)
+    FOREIGN KEY (parent_id) REFERENCES items (id)
 );
 
 DROP TABLE IF EXISTS sku;
@@ -72,7 +72,7 @@ CREATE TABLE sku_item
     id        INTEGER(6) ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
 
     # This is the SKU number for the item.
-    item_id    INTEGER(6) ZEROFILL,
+    parent_id    INTEGER(6) ZEROFILL,
 
     # This is the price paid for the item obv.
     price   DOUBLE,
@@ -90,5 +90,52 @@ CREATE TABLE sku_item
     order_no TEXT,
 
     # This is grabbing the SKU from the table.
-    FOREIGN KEY (item_id) REFERENCES sku (id)
+    FOREIGN KEY (parent_id) REFERENCES sku (id)
+);
+
+DROP TABLE IF EXISTS purchase_order;
+CREATE TABLE purchase_order
+(
+    # This is simply the number that represents this PO
+    # within the website.
+    id        INTEGER(6) ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
+
+    # This is the total price paid for the PO.
+    total_price   DOUBLE,
+
+    # This is the status of the shipment, ie recieved or in transit.
+    status TEXT,
+
+    # Date it was purchased.
+    timestamp TEXT,
+
+    # Order number from retailer.
+    order_no TEXT,
+
+    # Place it was bought from.
+    retailer TEXT
+);
+
+DROP TABLE IF EXISTS po_items;
+CREATE TABLE po_items
+(
+    # This is the id of the item within the PO
+    id        INTEGER(6) ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    
+    sku     INTEGER(6) ZEROFILL,
+
+    # This is the ID of the parent PO itself
+    parent_id    INTEGER(6) ZEROFILL,
+
+    # This is the price paid for the item obv.
+    price   DOUBLE,
+
+    # This is the price paid for the item obv.
+    name   TEXT,
+
+    # This is the price paid for the item obv.
+    quantity   INTEGER,
+
+    # This is grabbing the SKU from the table.
+    FOREIGN KEY (parent_id) REFERENCES purchase_order (id)
 );
