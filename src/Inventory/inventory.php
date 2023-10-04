@@ -2,8 +2,7 @@
     namespace Axolotl\Inventory;
 
     // Runs the autoload
-    $path = $_SERVER['DOCUMENT_ROOT'];
-    $path .= "/vendor/autoload.php";
+    $path = "../../vendor/autoload.php";
     require_once $path;
 
     // Most functions are contained in helper.php

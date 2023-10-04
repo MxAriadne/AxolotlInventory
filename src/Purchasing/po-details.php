@@ -1,9 +1,9 @@
 <?php
     
     namespace Axolotl\Purchasing;
-    
-    $path = $_SERVER['DOCUMENT_ROOT'];
-    $path .= "/vendor/autoload.php";
+
+    // Runs the autoload
+    $path = "../../vendor/autoload.php";
     require_once $path;
     
     use Axolotl\Helper;
