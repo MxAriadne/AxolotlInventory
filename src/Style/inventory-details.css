@@ -43,9 +43,7 @@ button {
     color: black;
     font-size: 16px;
     font-family: "RedHands", serif;
-    padding: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 20px;
     border-radius: 12px;
     display: inline-block;
     text-align: center;
@@ -175,9 +173,7 @@ h1, p {
     color: gray;
     font-size: 12px;
     font-family: "RedHands", serif;
-    padding: 16px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding: 6px 16px;
     border-radius: 12px;
     display: inline-block;
     text-align: center;
@@ -214,8 +210,7 @@ a, a:link, a:hover, a:visited, a:active {
 input {
     background-color: #dec3e3;
     border: 2px solid #C1A5CC;
-    margin: 10px;
-    margin-left: 20px;
+    margin: 10px 10px 10px 20px;
     border-radius: 8px;
     font-size: 12px;
     font-family: "RedHands", serif;

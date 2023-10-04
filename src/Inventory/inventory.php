@@ -1,47 +1,73 @@
 <?php
     namespace Axolotl\Inventory;
 
+    // Runs the autoload
     $path = $_SERVER['DOCUMENT_ROOT'];
     $path .= "/vendor/autoload.php";
     require_once $path;
 
+    // Most functions are contained in helper.php
     use Axolotl\Helper;
 
+    // New instance to run functions.
     $helper = new Helper();
     
-    date_default_timezone_set('America/Chicago');
-    $date = date("m/d/Y\ng:i a");
-
+    // This saves the entire inventory table as an array.
     $inventory = $helper->listDataset("sku", null);
-
+    
     // Check if the request method is POST
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+        // The 'delete' element is attached to every SKU so once it's sent via the button in the table
+        // it will call the delete function while passing the relevant IDs
         if (isset($_POST['delete'])) {
+            // Optional values are stored in this array
             $optional = array("parent_id"=>$_POST['delete'], "child"=>"sku_item");
+            
+            // When deleting an item from inventory we need to pass the parent sku id and the child sku id
+            // These are stored in optional since deleteEntry() is a generic function
             $helper->deleteEntry("sku", $_POST['delete'], $optional);
 
+            // Not technically necessary for POST but don't want to accidentally cause
+            // needless MySQL errors.
             unset($_POST["delete"]);
+            
+            // Reload the page to reflect the new table.
             header("refresh: 0");
         }
 
+        // The 'view' element is attached to every SKU so once it's sent via the button in the table
+        // it will call the view function while passing the relevant IDs
         if (isset($_POST['view'])) {
             $helper->viewEntry("sku", $_POST['view']);
+            
+            // Not technically necessary for POST but don't want to accidentally cause
+            // needless MySQL errors.
             unset($_POST["view"]);
+            
+            // Reload the page to reflect the new table.
             header("refresh: 0");
         }
 
+        // The 'add-item' element is contained in #left-data-box and it's simply passthrough for form data
+        // to be saved in the inventory table.
         if (isset($_POST['add-item'])) {
+            // saveEntry is a generic function, we pass an array of variable names and values for those variables.
             $helper->saveEntry("sku",
                 array("name"=>"'" . $_POST['name'] . "'",
                     "quantity"=>0));
 
+            // Not technically necessary for POST but don't want to accidentally cause
+            // needless MySQL errors.
             unset($_POST["add-item"]);
+            
+            // Reload the page to reflect the new table.
             header("refresh: 0");
         }
 
         if (isset($_POST['export'])) {
+            // We save the table name in the session so output-csv has access to it.
             $_SESSION["type"] = "sku";
+            // Redirect to the file, this specifically auto downloads the CSV for the relevant data saved in session
             header('Location: ../Output/output-csv.php');
         }
 

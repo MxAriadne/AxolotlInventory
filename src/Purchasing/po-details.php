@@ -49,10 +49,12 @@
         }
     
         if (isset($_POST['export'])) {
+            // We save the table name, date, and parent id in the session so output-csv has access to it.
             $_SESSION["month"] = date('m');
             $_SESSION["year"] = date('Y');
             $_SESSION["id"] = $_GET["id"];
             $_SESSION["type"] = "po_items";
+            // Redirect to the file, this specifically auto downloads the CSV for the relevant data saved in session
             header('Location: ../Output/output-csv.php');
         }
         

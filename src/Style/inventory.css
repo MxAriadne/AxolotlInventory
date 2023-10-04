@@ -1,31 +1,42 @@
 /* Set common styles for html and body elements */
 html, body {
-    height: 100%;
-    width: 100%;
+    height: auto;
+    width: auto;
     font-family: "RedHands", serif;
-    color: #fdf5ff;
+    background-color: #CDFFE3;
+    margin: 0 auto;
 }
 
 /* Define the RedHands font only once */
 @font-face {
     font-family: "RedHands";
-    src: url("../style/KGRedHands.ttf");
+    src: url("KGRedHands.ttf");
 }
 
 /* Define the CourierNew font only once */
 @font-face {
     font-family: "CourierNew";
-    src: url("../style/cour.ttf");
+    src: url("cour.ttf");
 }
 
 /* Set common styles for the left data box */
 #left-data-box {
-  width: 27%;
-  height: 100vh;
-  /*background-color: #ffcde9;*/
-  background-color: #CDFFE3;
-  border: 15px solid #CDFFE3;
-  float: left;
+    width: 27%;
+    height: auto;
+    border: 15px solid #CDFFE3;
+    float: left;
+    background-color: #CDFFE3;
+    overflow: auto;
+}
+
+/* Set common styles for the right data box */
+#right-data-box {
+    width: 73%;
+    height: auto;
+    padding: 50px;
+    float: right;
+    background-color: #fdf5ff;
+    overflow: auto;
 }
 
 #export-csv-table tr td button {
@@ -102,15 +113,6 @@ html, body {
   font-size: 12px;
   padding: 10px;
   font-family: "RedHands", serif;
-}
-
-/* Set common styles for the right data box */
-#right-data-box {
-  width: 73%;
-  height: 100vh;
-  padding: 50px;
-  float: right;
-  background-color: #fdf5ff;
 }
 
 #right-data-box #item-grid td, #items {

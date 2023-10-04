@@ -42,10 +42,17 @@
         }
 
         if (isset($_POST['export'])) {
+            // We save the table name and date in the session so output-csv has access to it.
             $_SESSION["month"] = $_POST["month"];
             $_SESSION["year"] = $_POST["year"];
             $_SESSION["type"] = "items";
+            // Redirect to the file, this specifically auto downloads the CSV for the relevant data saved in session
             header('Location: ../Output/output-csv.php');
+        }
+        
+        if (isset($_POST['print'])) {
+            //header('Location: ../Output/output-barcode.php?id=' . $_POST['print'] . '&origin=workorders.php');
+            //echo "<script> popUpAndPrint(); </script>";
         }
         
     }
@@ -67,8 +74,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
+    <!-- Barcode Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.3/JsBarcode.all.min.js"></script>
+
 </head>
 <body>
+
+<svg id="barcode"></svg>
 
 <script>
     function searchItems() {
@@ -84,7 +96,30 @@
             }
         }
     }
+
+    function popUpAndPrint(name, id)
+    {
+        JsBarcode("#barcode", id, {text: id + ' - ' + name});
+
+        let container = $('#barcode');
+        let printWindow = window.open('', 'PrintMap',
+            'width=' + 1024 + ',height=' + 512);
+        printWindow.document.writeln(barcode.outerHTML);
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
+    }
+    setTimeout(popUpAndPrint, 500);
     
+    /*function popUpAndPrint(name, id)
+    {
+        
+        let printWindow = window.open('', 'PrintMap');
+        printWindow.document.writeln();
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
+    }*/
 
     document.addEventListener('DOMContentLoaded', function () {
         $('.tab').on('click', function(){
@@ -178,14 +213,19 @@
         <?php
             foreach ($wordorder as $wo) {
                 echo "<tr class=\"target\" name=\"" . $wo["id"] . "\">";
-                echo "<form action=\"\" method=\"POST\"><td>
+                echo "<td><form action=\"\" method=\"POST\">
                           <button type='submit'>🔎</button>
                           <input type=\"hidden\"  name=\"view\"  value=\"" . $wo["id"] . "\"/>
                       </form>
                       <form action=\"\" method=\"POST\">
                           <button type='submit'>🗑️</button>
                           <input type=\"hidden\"  name=\"delete\"  value=\"" . $wo["id"] . "\"/>
-                      </td></form>";
+                      </form>
+                      <form action=\"\" method=\"POST\">
+                          <button onclick='popUpAndPrint(\"". $wo["name"] . "\", \"" . $wo["id"] . "\")'>🖨</button>
+                          <!--<input type=\"hidden\"  name=\"print\"  value=\"" . $wo["id"] . "\"/>-->
+                      </td>
+                      </form>";
                 echo "<td> ". $wo["id"] . "</td>";
                 echo "<td> ". $wo["name"] . " </td>";
                 echo "<td> ". $wo["info"] . " </td>";

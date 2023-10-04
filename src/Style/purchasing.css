@@ -1,9 +1,10 @@
 /* Set common styles for html and body elements */
 html, body {
-    height: 100%;
-    width: 100%;
+    height: auto;
+    width: auto;
     font-family: "RedHands", serif;
-    color: #fdf5ff;
+    background-color: #ADC4CE;
+    margin: 0 auto;
 }
 
 /* Define the RedHands font only once */
@@ -103,14 +104,13 @@ html, body {
   padding: 10px;
   font-family: "RedHands", serif;
 }
-
 /* Set common styles for the right data box */
 #right-data-box {
-  width: 73%;
-  height: 100vh;
-  padding: 50px;
-  float: right;
-  background-color: #F8F6F4;
+    width: 73%;
+    height: auto;
+    padding: 50px;
+    float: right;
+    background-color: #F8F6F4;
 }
 
 #right-data-box #item-grid td, #items {

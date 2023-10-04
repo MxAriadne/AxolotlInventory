@@ -1,9 +1,10 @@
 /* Set common styles for html and body elements */
 html, body {
-    height: 100%;
-    width: 100%;
+    height: auto;
+    width: auto;
     font-family: "RedHands", serif;
-    overflow: hidden;
+    background-color: #ffcde9;
+    margin: 0 auto;
 }
 
 /* Define the RedHands font only once */
@@ -20,20 +21,20 @@ html, body {
 
 /* Set common styles for the left data box */
 #left-data-box {
-  width: 27%;
-  height: 100vh;
-  background-color: #ffcde9;
-  border: 15px solid #ffcde9;
-  float: left;
-  overflow: auto;
+    width: 27%;
+    height: auto;
+    border: 15px solid #ffcde9;
+    float: left;
+    background-color: #ffcde9;
 }
 
 /* Set common styles for the right data box */
 #right-data-box {
     width: 73%;
-    height: 100vh;
+    height: auto;
     padding: 50px;
     float: right;
+    background-color: white;
 }
 
 /* Set styles for the Add Item button */
@@ -65,7 +66,7 @@ html, body {
     background-color: #ffcde9;
     font-size: 25px;
     padding-top: 20px;
-    padding-bottom: 0px;
+    padding-bottom: 0;
     margin: 0 auto;
     display: block;
     font-family: "CourierNew", serif;
@@ -154,23 +155,19 @@ button {
     color: black;
     font-size: 16px;
     font-family: "RedHands", serif;
-    padding: 16px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding: 6px 16px;
     border-radius: 12px;
     display: inline-block;
     text-align: center;
 }
 
-td select, option {
+td select, option, #export-csv-table tr td button {
     background-color: #FFFAF4FF;
     border: 2px solid #ffcde9;
     color: gray;
     font-size: 16px;
     font-family: "RedHands", serif;
-    padding: 16px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding: 6px 16px;
     border-radius: 12px;
     display: inline-block;
 }
@@ -181,20 +178,6 @@ td select {
 
 option {
     text-align: left;
-}
-
-#export-csv-table tr td button {
-    background-color: #FFFAF4FF;
-    border: 2px solid #ffcde9;
-    color: gray;
-    font-size: 16px;
-    font-family: "RedHands", serif;
-    padding: 16px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    border-radius: 12px;
-    display: inline-block;
-    text-align: center;
 }
 
 #export-csv-table {
@@ -223,9 +206,7 @@ option {
     color: gray;
     font-size: 14px;
     font-family: "RedHands", serif;
-    padding: 16px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding: 6px 16px;
     border-radius: 12px;
     display: inline-block;
     text-align: center;
